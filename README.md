@@ -97,35 +97,35 @@ Note that only a subset of JSON Schema is implemented.
 Special rules are always dicts, with keys prefixed with "!".  Special keys are
 patterned after JSON Schema specifiers, and include the following:
 
-- !type [str or list]: accept any object of this type. Accepts JSON Schema 
+- `!type` [str or list]: accept any object of this type. Accepts JSON Schema 
   "string", "number", "integer", "array", "object", "boolean", "null" as well
   as Python class names 'str', 'float', 'int', 'list', 'dict'. or 'bool'.
 
   If a list is given, multiple types are accepted.
-- !enum list: accept any object that matches one of the items in the list. 
-- !minimum value: accept numeric values that are >= value
-- !maximum value: accept numeric values that are <= value
-- !exclusiveMinimum value: accept numeric values that are > value
-- !exclusiveMaximum value: accept numeric values that are < value
-- !properties dict: designates a dict of possible properties (keys).
+- `!enum` list: accept any object that matches one of the items in the list. 
+- `!minimum` value: accept numeric values that are >= value
+- `!maximum` value: accept numeric values that are <= value
+- `!exclusiveMinimum` value: accept numeric values that are > value
+- `!exclusiveMaximum` value: accept numeric values that are < value
+- `!properties` dict: designates a dict of possible properties (keys).
   The property name will map to its specification.  Note that like JSON Schema,
   properties are optional.
-- !additionalProperties bool: if False, will not allow any other properties
+- `!additionalProperties` bool: if False, will not allow any other properties
   in a dictionary than are specified in the rule.
-- !required list: a list of property names that are required.
-- !minProperties value: must have at least this number of properties
-- !minProperties value: must have at least this number of properties
-- !items rule: for lists/arrays, all items must match this rule.  (Note: can't
+- `!required` list: a list of property names that are required.
+- `!minProperties` value: must have at least this number of properties
+- `!minProperties` value: must have at least this number of properties
+- `!items` rule: for lists/arrays, all items must match this rule.  (Note: can't
   specify multiple item rules as in JSON Schema)
-- !minItems value: lists/arrays must have at least this number of items.
-- !maxItems value: lists/arrays must have at most this number of items.
-- !anyOf list: any of the rules given in the list may match.
-- !length value: length specifier, works for either dicts or lists.
-- !or list: alias for anyOf.
-- !value val: takes on value val.  Usually you'd want to just replace the
+- `!minItems` value: lists/arrays must have at least this number of items.
+- `!maxItems` value: lists/arrays must have at most this number of items.
+- `!anyOf` list: any of the rules given in the list may match.
+- `!length` value: length specifier, works for either dicts or lists.
+- `!or` list: alias for ~!anyOf`.
+- `!value` val: takes on value val.  Usually you'd want to just replace the
   dict with val, but for quick insertion of fixed values into an existing
   schema, this will do in a pinch.
-- !empty: matches with nothing (not even None). Used to specify that a key
+- `!empty`: matches with nothing (not even None). Used to specify that a key
   should not be present in a dict.
 
 
