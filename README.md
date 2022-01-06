@@ -20,20 +20,20 @@ simple to modify items to specify what you'd like.  Say that you want to match
 a user login object, except for the 'session' and 'ip' key:
 
 ```python
-    item = {
-        "name":"John Doe",
-        "password":"john123",
-        "session":28387432,
-        "ip":"128.0.0.1"
-    }
+item = {
+    "name":"John Doe",
+    "password":"john123",
+    "session":28387432,
+    "ip":"128.0.0.1"
+}
 ```
 
 To ignore these keys, just set:
 
 ```python
-    schema = copy.copy(item)
-    schema['session']=None
-    schema['ip']=None
+schema = copy.copy(item)
+schema['session']=None
+schema['ip']=None
 ```
 
 Then, the `match` function will match any item matching John Doe's
@@ -43,22 +43,22 @@ As another example, suppose that you'd like to recognize "large circles".  The
 circle object is represented by an object like this:
 
 ```python
-    circle = {
-        "type":"Circle",
-        "center":[0.583,3.2919],
-        "radius":0.25
-    }
+circle = {
+    "type":"Circle",
+    "center":[0.583,3.2919],
+    "radius":0.25
+}
 ```
 
 Then, we can simply modify some conditions the center and radius to match
 circles with radius greater than 2:
 
 ```python
-    import jschemalite
-    big_circle_schema = circle.copy()
-    big_circle_schema['center'] = [None,None]  #match 2-element lists
-    big_circle_schema['radius'] = {'!minimum':2}  #match any radius >= 2
-    print(jschemalite.match(circle,big_circle_schema)) #prints False
+import jschemalite
+big_circle_schema = circle.copy()
+big_circle_schema['center'] = [None,None]  #match 2-element lists
+big_circle_schema['radius'] = {'!minimum':2}  #match any radius >= 2
+print(jschemalite.match(circle,big_circle_schema)) #prints False
 ```
 
 Note that the `'center'` key will match any 2-element list, including compound
@@ -67,16 +67,16 @@ items need to be numeric, you can replace its rule with the JSON Schema-like
 specifier::
 
 ```python
-    {
-        '!type':'list',   #can use Python names or JSON names
-        '!minItems':2,
-        '!maxItems':2,
-        '!items':{
-            '!type':'number',
-            '!minimum':-1000000,
-            '!maximum':1000000
-         }
-    }
+{
+    '!type':'list',   #can use Python names or JSON names
+    '!minItems':2,
+    '!maxItems':2,
+    '!items':{
+        '!type':'number',
+        '!minimum':-1000000,
+        '!maximum':1000000
+        }
+}
 ```
 
 Note that only a subset of JSON Schema is implemented.
@@ -141,25 +141,25 @@ the rule `{"!type":"null"}`.
 Basic examples:
 
 ```python
-    from jschemalite import match
+from jschemalite import match
 
-    obj = {'a':3,'b':{'foo':'bar','baz':[0.4,0.2]}}
-    schema1 = {'a':None,'b':None}       #dict must have keys 'a' and 'b'
-    schema2 = {'!properties':{'a':None,'b':None,'c':None}}  #dict may have keys 'a', 'b', and 'c'
-    schema3 = {'a':None,'b':{'foo':None,'baz':None}}        #dict must have the top-level key structure 
-    schema4 = {'b':{'foo':None}}                            #dict must have at least as many keys as are specified
-    array_schema = {'!type':'array'}    #object must be an array
-    size2_array_schema = {'!type':'array','!length':2}      #object must be a length-2 array
-    print(match(obj,obj),"= True")  #an object matches itself
-    print(match(obj,schema1),"= True")  #it matches the schema
-    print(match(obj,schema2),"= True")  #it matches the schema
-    print(match(obj,schema3),"= True")  #it matches the schema
-    print(match(obj,schema4),"= True")  #it matches the schema
-    print(match(obj,array_schema),"= False")  #it's not an array
-    print(match(obj['b']['baz'],size2_array_schema),"= True")  #it's a length 2 array
-    enum_schema = {'!enum':["One","Two","Three"]}        #this is how you specify an enum
-    print(match("One",enum_schema))
-    print(match([1],enum_schema))
+obj = {'a':3,'b':{'foo':'bar','baz':[0.4,0.2]}}
+schema1 = {'a':None,'b':None}       #dict must have keys 'a' and 'b'
+schema2 = {'!properties':{'a':None,'b':None,'c':None}}  #dict may have keys 'a', 'b', and 'c'
+schema3 = {'a':None,'b':{'foo':None,'baz':None}}        #dict must have the top-level key structure 
+schema4 = {'b':{'foo':None}}                            #dict must have at least as many keys as are specified
+array_schema = {'!type':'array'}    #object must be an array
+size2_array_schema = {'!type':'array','!length':2}      #object must be a length-2 array
+print(match(obj,obj),"= True")  #an object matches itself
+print(match(obj,schema1),"= True")  #it matches the schema
+print(match(obj,schema2),"= True")  #it matches the schema
+print(match(obj,schema3),"= True")  #it matches the schema
+print(match(obj,schema4),"= True")  #it matches the schema
+print(match(obj,array_schema),"= False")  #it's not an array
+print(match(obj['b']['baz'],size2_array_schema),"= True")  #it's a length 2 array
+enum_schema = {'!enum':["One","Two","Three"]}        #this is how you specify an enum
+print(match("One",enum_schema))
+print(match([1],enum_schema))
 ```
 
 ## Sampling
@@ -170,15 +170,15 @@ function.  This works best when numeric items have a minimum and maximum.
 
 ## Conversions
 
-Can convert to JSON Schema using :func:`to_json_schema`.
+Can convert to JSON Schema using `to_json_schema`.
 
 No conversions from JSON Schema back to JSON Schema Lite yet.
 
 JSON Schema Lite objects can be converted to MongoDB queries.
 
 ```python
-    from jschemalite.mongodb import jschemalite_to_mongodb
-    mongodb_query = jschemalite_to_mongodb(jsl_query)
+from jschemalite.mongodb import jschemalite_to_mongodb
+mongodb_query = jschemalite_to_mongodb(jsl_query)
 ```
 
 
